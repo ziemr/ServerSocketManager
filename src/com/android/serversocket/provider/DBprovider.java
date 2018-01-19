@@ -16,8 +16,13 @@ import android.net.Uri;
 public class DBprovider extends ContentProvider {
 	private  OpenHelper mHelper;
 	private SQLiteDatabase mDatabase;
+	 private static final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
+	private static final Uri CONTENT_URI = Uri.parse("content://" + Const.AUTHORITY +"/" + Const.TABLE_RecordIN);
 	
-    private static final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
+	static {
+		matcher.addURI(Const.AUTHORITY,Const.TABLE_RecordIN, 1);
+		matcher.addURI(Const.AUTHORITY,Const.TABLE_Contacts, 1);
+	}
 	@Override
 	public boolean onCreate() {
 		mHelper = new OpenHelper(getContext());
@@ -42,7 +47,12 @@ public class DBprovider extends ContentProvider {
 
 	@Override
 	public String getType(Uri uri) {
-		// TODO Auto-generated method stub
+		switch (matcher.match(uri)) {
+		case 1 :
+		   return "vnd.android.cursor.dir" + Const.TABLE_RecordIN;
+		case 2 :
+		   return "vnd.android.cursor.dir" + Const.TABLE_Contacts;
+		}
 		return null;
 	}
 
@@ -62,6 +72,7 @@ public class DBprovider extends ContentProvider {
 	            try {
 	                mDatabase.insert(tbl, null, values);
 	                mDatabase.setTransactionSuccessful();
+	                getContext().getContentResolver().notifyChange(CONTENT_URI, null);
 	            } finally {
 	                mDatabase.endTransaction();
 	            }
@@ -107,6 +118,7 @@ public class DBprovider extends ContentProvider {
 	        // ･ｳ･ﾟ･ﾃ･ﾈ
 	        mDatabase.setTransactionSuccessful();
 	        mDatabase.endTransaction();
+	        getContext().getContentResolver().notifyChange(CONTENT_URI, null);
 	        return uri;
 	}
 
@@ -126,6 +138,7 @@ public class DBprovider extends ContentProvider {
 	        try {
 	            deleteCount = mDatabase.delete(tbl, selection, selectionArgs);
 	            mDatabase.setTransactionSuccessful();
+	            getContext().getContentResolver().notifyChange(CONTENT_URI, null);
 	        } finally {
 	            mDatabase.endTransaction();
 	        }
@@ -148,6 +161,7 @@ public class DBprovider extends ContentProvider {
 	        try {
 	            updateCount = mDatabase.update(tbl, values, selection, selectionArgs);
 	            mDatabase.setTransactionSuccessful();
+	            getContext().getContentResolver().notifyChange(CONTENT_URI, null);
 	        } finally {
 	            mDatabase.endTransaction();
 	         }

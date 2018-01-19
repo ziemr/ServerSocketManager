@@ -79,7 +79,7 @@ public class DataBackUp {
     public  DataBackUp(Context context) {  
         mContext = context;  
 //        ApkInfo apkInfo = new ResourceUtil(context).getApkInfo();  
-        APP_PATH = new StringBuilder("/data/data/").append("com.android.clientsocket")  
+        APP_PATH = new StringBuilder("/data/data/").append("com.android.serversocket")  
                 .toString();  
         SHARED_PREFS = APP_PATH + "/shared_prefs";  
         DATABASES = APP_PATH + "/databases";  

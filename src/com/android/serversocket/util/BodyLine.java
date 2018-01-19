@@ -11,9 +11,29 @@ public class BodyLine {
 	private String data4;
 	private String data5;
 	private String date;
-	private String data6; //remark
+	private String data6;
+	private String data7;
+	private Integer modified;//remark
+	
+	public String getData7() {
+		return data7;
+	}
+
+	public void setData7(String data7) {
+		this.data7 = data7;
+	}
+
+
 	
 	
+	public Integer getModified() {
+		return modified;
+	}
+
+	public void setModified(Integer modified) {
+		this.modified = modified;
+	}
+
 	public void setData(int index , String data) {
 		isClear = false;
 		switch (index) {

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false"
+        android:drawable="@drawable/eco_com_list_btn" />
+
+    <item android:state_enabled="true" android:state_pressed="true"
+        android:drawable="@drawable/eco_com_list_btn_touch" />
+
+    <item android:state_enabled="true" android:state_pressed="false"
+        android:state_selected="true"
+        android:drawable="@drawable/eco_com_list_btn_touch" />
+
+<!-- 2012.02.10 Add Start -->
+    <item android:state_enabled="true" android:state_focused="true"
+        android:drawable="@drawable/eco_com_list_btn_touch" />
+<!-- 2012.02.10 Add End -->
+
+    <item android:state_enabled="true" android:state_pressed="false"
+        android:state_selected="false"
+        android:drawable="@drawable/eco_com_list_btn" />
+</selector>

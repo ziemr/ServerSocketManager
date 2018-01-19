@@ -3,9 +3,7 @@ package com.android.serversocket.ui;
 
 import java.net.SocketException;
 
-import com.android.serversocket.MainActivity;
 import com.android.serversocket.R;
-import com.android.serversocket.factory.DataTree;
 import com.android.serversocket.provider.DBOperator;
 import com.android.serversocket.socket.ConnectionManager;
 import com.android.serversocket.socket.Info;
@@ -232,7 +230,7 @@ public class LoginFrgmtActivity extends FragmentActivity implements
 			public void run() {
 				startService(intent);
 				Intent intent = new Intent();
-				intent = new Intent(LoginFrgmtActivity.this, MainActivity.class);
+				intent = new Intent(LoginFrgmtActivity.this, RecordInFrgmtActivity.class);
 				LoginFrgmtActivity.this.startActivity(intent);
 				LoginFrgmtActivity.this.finish();// ½áÊø±¾Activity
 			}

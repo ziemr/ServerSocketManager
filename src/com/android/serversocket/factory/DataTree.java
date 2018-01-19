@@ -162,7 +162,7 @@ public class DataTree extends Activity {
 		Log.i(TAG, "reflashItems start");
  		items.clear();
 // 		adapterCount = mDbOperator.gettableCount(Const.TABLE_PupWinMage,"data2",Const.FLAG_DATAIN);
- 		adapterCount = mDbOperator.gettableCount(Const.TABLE_tree);
+ 		adapterCount = mDbOperator.gettableCount(Const.TABLE_PupTree);
     	for (int i = 0; i < adapterCount; i++) {
 //        	String name = mDbOperator.getWinMageName(i);
     		String name = mDbOperator.getTreeName(i);

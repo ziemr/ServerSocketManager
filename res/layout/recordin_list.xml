@@ -20,7 +20,7 @@
     android:paddingLeft="7dip"
 >
 
-    <com.android.clientsocket.ui.widget.DontPressWithParentTextView 
+    <com.android.serversocket.ui.widget.DontPressWithParentTextView 
         android:id="@+id/call_icon"
         android:layout_width="50dp"
         android:layout_height="match_parent"

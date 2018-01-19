@@ -120,7 +120,6 @@
         android:singleLine="true"
         android:ellipsize="marquee"
         android:gravity="center_vertical"
-        android:textColor="#FF0000"
     />
         
     <TextView android:id="@+id/line1"

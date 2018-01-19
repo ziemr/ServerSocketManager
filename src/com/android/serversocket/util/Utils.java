@@ -39,7 +39,7 @@ public class Utils {
     public static String toString(int mInt) {
     	return Integer.toString(mInt);
     }
-    
+
     public static String toTypeID(int mInt) {
     	return "T" + Integer.toString(mInt);
     }
@@ -57,7 +57,7 @@ public class Utils {
     }
     
     //////////////////////////////////////////////////
-    /*
+/*
     public static String toWarTypeID(int mInt) {
     	return "WT" + Integer.toString(mInt);
     }

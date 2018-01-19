@@ -12,13 +12,11 @@ import com.android.serversocket.util.Utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnShowListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -163,7 +161,7 @@ public class DataLeaf extends Activity {
     };
 	
 	public void refreshItems() {
-		adapterCount = mDbOperator.gettableCount(Const.TABLE_leaf,Const.COLOUM_TYPEID,Utils.toTreeID(mTypeId));
+		adapterCount = mDbOperator.gettableCount(Const.TABLE_PupLeaf,Const.COLOUM_TYPEID,Utils.toTreeID(mTypeId));
 		contentItems.clear();
 //		ArrayList<String> PupContName = mDbOperator.getPupContentNames(Utils.toWarTypeID(mTypeId));
 		ArrayList<String> PupContName = mDbOperator.getleafNames(Utils.toTreeID(mTypeId));

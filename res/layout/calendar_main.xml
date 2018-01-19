@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <!--
+<LinearLayout 
+    android:id="@+id/lay_title"
+    style="@style/TitleStyle"
+    android:layout_width="fill_parent" >
+    
+    <TextView 
+        android:id="@+id/btn_back"
+        style="@style/TitleLeftButtonStyle" />
+    <TextView 
+        android:id="@+id/tv_top"
+        style="@style/TitleMiddleTextStyle"
+        android:text="请选择日期" />
+    
+    <TextView 
+        android:id="@+id/btn_goback_to_today"
+        style="@style/TitleRightButtonStyle"
+        android:text="今天" />
+</LinearLayout>
+    -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#FF394147"
+        android:gravity="bottom" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btn_prev_month"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_left_press" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="上月"
+                android:gravity="center"
+                android:textColor="#ffffffff"
+                android:textSize="15.0dip" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.6"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="#ffffffff"
+                android:textSize="21.0dip" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            android:orientation="horizontal" >
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="下月"
+                android:gravity="center"
+                android:textColor="#ffffffff"
+                android:textSize="15.0dip" />
+            <Button
+                android:id="@+id/btn_next_month"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_right_press" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="#FF8091A8" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="周日"
+            android:textColor="#FF0000"
+            android:textSize="14dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="周一"
+            android:textColor="#ffffffff"
+            android:textSize="14dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="周二"
+            android:textColor="#ffffffff"
+            android:textSize="14dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="周三"
+            android:textColor="#ffffffff"
+            android:textSize="14dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="周四"
+            android:textColor="#ffffffff"
+            android:textSize="14dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="周五"
+            android:textColor="#ffffffff"
+            android:textSize="14dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="周六"
+            android:textColor="#FF0000"
+            android:textSize="14dp" />
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#000000"
+        android:clickable="true"
+        android:clipChildren="true"
+        android:columnWidth="50.0dip"
+        android:horizontalSpacing="1.0dip"
+        android:listSelector="@null"
+        android:numColumns="7"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="1.0dip" >
+    </GridView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000" >
+    </LinearLayout>
+    <!-- review -->
+   <ScrollView
+        android:id="@+id/id_more_scrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dip"
+            android:orientation="vertical" >
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="#FF394147" >
+            <TextView
+                android:id="@+id/txt_calendar_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffffff"
+                android:textSize="20.0dip"
+                android:paddingLeft="15dip"/>
+            </LinearLayout>
+           <View android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="#ffcccccc"/>
+            <RelativeLayout
+                 android:id="@+id/more_calls"
+                 android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:minHeight="50.0dip"
+                android:paddingBottom="14.0dip"
+                android:paddingLeft="14.0dip"
+                android:paddingRight="12.0dip"
+                android:paddingTop="14.0dip"
+                android:background="@drawable/selector_relativelayout_bg" >
+
+                <ImageView
+                    android:id="@+id/image_history"
+                    android:layout_width="23.0dip"
+                    android:layout_height="23.0dip"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/more_jd_app_recommend" />
+                <TextView 
+                    android:id="@+id/txt_calendar_calls"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="天天"
+                    android:textSize="16.0dip"
+                    android:layout_toRightOf="@id/image_history"
+                    android:paddingLeft="15dip"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            
+            <View android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="#ffcccccc"/>
+            <RelativeLayout
+                android:id="@+id/more_seting"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:minHeight="50.0dip"
+                android:paddingBottom="14.0dip"
+                android:paddingLeft="14.0dip"
+                android:paddingRight="12.0dip"
+                android:paddingTop="14.0dip"
+                android:background="@drawable/selector_relativelayout_bg" >
+
+                 <ImageView
+                    android:id="@+id/image_history"
+                    android:layout_width="23.0dip"
+                    android:layout_height="23.0dip"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/main_menu_history" />
+                <TextView 
+                    android:id="@+id/txt_calendar_records"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="得到"
+                    android:textSize="16.0dip"
+                    android:layout_toRightOf="@id/image_history"
+                    android:paddingLeft="15dip"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            
+            <View android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="#ffcccccc"/>
+            <RelativeLayout
+                android:id="@+id/more_seting"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:minHeight="50.0dip"
+                android:paddingBottom="14.0dip"
+                android:paddingLeft="14.0dip"
+                android:paddingRight="12.0dip"
+                android:paddingTop="14.0dip" 
+                android:background="@drawable/selector_relativelayout_bg" >
+
+                <ImageView
+                    android:id="@+id/image_seting"
+                    android:layout_width="23.0dip"
+                    android:layout_height="23.0dip"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/main_menu_setup" />
+                <TextView 
+                    android:id="@+id/txt_calendar_recordspec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="得到"
+                    android:textSize="16.0dip"
+                    android:layout_toRightOf="@id/image_seting"
+                    android:paddingLeft="15dip"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            <View android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="#ffcccccc"/>
+            <Button
+            android:id="@+id/calendar_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="7dip"
+            android:layout_marginRight="7dip"
+            android:layout_marginBottom="20dp"
+            android:background="#ff336699"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:text="@string/btn_Confirmation" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

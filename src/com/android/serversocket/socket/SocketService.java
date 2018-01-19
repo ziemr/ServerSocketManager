@@ -2,8 +2,14 @@ package com.android.serversocket.socket;
 
 import java.net.SocketException;
 
+import com.android.serversocket.provider.DBOperator;
 import com.android.serversocket.socket.ServersSocket.ClientDataCallBack;
+import com.android.serversocket.util.Const;
+import com.android.serversocket.util.Utils;
+import com.android.serversocket.util.dataStructure;
+import com.android.serversocket.util.dataStructure.strUser;
 
+import android.app.MediaRouteButton;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -12,7 +18,7 @@ import android.widget.Toast;
 public class SocketService extends Service {
 	private UDPSocketBroadCast mBroadCast;
 	private ServersSocket mServersSocket;
-
+    private DBOperator mOperator;
 	@Override
 	public IBinder onBind(Intent intent) {
 		// TODO Auto-generated method stub
@@ -23,6 +29,7 @@ public class SocketService extends Service {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
+		mOperator = new DBOperator(getApplicationContext());
 		try {
 			String ip = ConnectionManager.getLocalIP();
 			if (ip != null && !"".equals(ip)) {
@@ -53,13 +60,27 @@ public class SocketService extends Service {
 		public void getClientData(int connectMode, String str) {
 			switch (connectMode) {
 			case Info.CONNECT_SUCCESS:// 连接成功
-				sendCast(Info.CONNECT_SUCCESS, str);
+//				sendCast(Info.CONNECT_SUCCESS, str);
 				break;
 			case Info.CONNECT_GETDATA:// 传输数据
-				sendCast(Info.CONNECT_SUCCESS, str);
+				Utils.showToast(getApplicationContext(), str);
+				String[] message = str.split(Const.KEY_DELIMITER);
+				String head = message[0];
+				String body = message[1];
+				if (Const.TABLE_User.equals(head)) {
+					String[] msg = body.split(Const.KEY_DELIMITER_S);
+					strUser user= new dataStructure.strUser();
+					user.setMac(msg[0]);
+					user.setPassword(msg[1]);
+					mOperator.insertUsers(user);
+					mOperator.updateUserStatus(user.getMac(), Const.net_connect_ok);
+				}
+				
 				break;
 			case Info.CONNECT_FAIL:
-				sendCast(Info.CONNECT_FAIL, str);
+				Utils.showToast(getApplicationContext(), "connect fail stauts->ng");
+				mOperator.updateUserStatus(str, Const.net_connect_ng);
+//				sendCast(Info.CONNECT_FAIL, str);
 				break;
 			}
 		}

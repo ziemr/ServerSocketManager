@@ -61,8 +61,9 @@ public class Const {
 	public static final String TABLE_PupTree = "Tree";  //PoPupWidowsDataTree 's table
 	public static final String TABLE_PupLeaf = "Leaf"; //PoPupWidowsDataLeaf 's talbe
 	
-	public static final String TABLE_tree = "Tree";
-	public static final String TABLE_leaf = "Leaf";
+	public static final String TABLE_PupWinMage = "PupWinMage";  //PoPupWidowsDataTree 's table
+	public static final String TABLE_PupWinContent = "PupWinContent"; //PoPupWidowsDataLeaf 's talbe
+
 	public static final String TABLE_WHRecordIN = "WHRecordIN";
 	public static final String TABLE_WHRecordIndex = "whrecordindex";
 	
@@ -94,6 +95,7 @@ public class Const {
 	public static final String COLOUM_TYPEID = "typeID";
 	public static final String AUTHORITY = "com.provider.serverDBprovider";  //==
 	
+	public static final String AUTHORITY_GASTOVE = "com.provider.gastoveDBprovider"; 
 	public static final long SLEEPTIEM = 200l;
 	public static final String BUNDLE_DRAG = "dragorclick";
 	public static final String KEY_DELIMITER = ",";
@@ -171,4 +173,14 @@ public class Const {
     public static final String STATUS_END = "6";
     public static final String STATUS_scrap = "-1";
     public static final String STATUS_REMARK = "7";
+    
+    public static final String SOCKET_CALLS = "A";
+    public static final String SOCKET_REMARK = "B";
+    public static final String SOCKET_CONTACTINFO = "C";
+    public static final String SOCKET_TREE = "D";
+    public static final String SOCKET_LEAF = "E";
+    public static final String SOCKET_RECORDIN = "F";
+    public static final String SOCKET_RECORDTODAY = "G";
+    public static final String SOCKET_RECORDTODAYINDEX = "H";
+    public static final String SOCKET_TABLECOUNT = "ct";
 }

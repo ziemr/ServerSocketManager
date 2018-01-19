@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
 import java.net.Socket;
+
 import android.os.Handler;
 import android.os.Message;
 
@@ -157,6 +158,7 @@ public class ServersSocket {
 					outStream = mSocket.getOutputStream();// 获得输出流
 					String clientIP = mSocket.getInetAddress().getHostAddress();// 获得客户端IP
 					sendMessages(Info.CONNECT_SUCCESS, clientIP);// 连接成功的回调
+					
 					while (!stopFlags && !allThreadStop) {
 						byte[] buf = new byte[10240];
 						mInputStream.read(buf);// 读取客户端数据
@@ -178,6 +180,9 @@ public class ServersSocket {
 						}
 						time = System.currentTimeMillis();
 						String str = new String(buf, "utf-8").trim();// 转码
+						
+						
+						
 						if (str != null && !"".equals(str) && !" ".equals(str)) {
 							if ("IHAVEQUIT".equals(str)) {// 客户端正常退出时发送过来的数据
 								mClientSocketManager.removeSocket(clientIP);// 在管理列表中去除这个客户端的所有信息
@@ -226,10 +231,11 @@ public class ServersSocket {
 		 * @param flag
 		 * @param message
 		 */
-		public void writeMessages(int flag, String message) {
+		public void writeMessages(int flag, String strMsg) {
+			byte[] msgBuffer = null;
 			try {
-				outStream.write("YOUSTAYONLINE"
-						.getBytes("utf-8"));
+				msgBuffer = strMsg.getBytes("UTF-8");
+				outStream.write(msgBuffer);
 				outStream.flush();
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();

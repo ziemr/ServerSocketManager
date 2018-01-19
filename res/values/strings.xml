@@ -19,6 +19,14 @@
      <string name="toast_setting_whtree_OK">"添加/修改  开启 "</string>   
      <string name="toast_ok" >"操作成功"</string>
     <string name="toast_ng" >"操作失败或已经存在"</string>
+    
      
-     <string name="head_name_wartree" >"入库数据"</string>
+     
+     <string name="contactsList" msgid="8661624236494819731">"通讯录"</string>
+     <string name="head_name_tree" >"出库流程"</string>
+    <string name="head_name_wartree" >"入库数据"</string>
+    <string name="head_remark" >"备注数据"</string>
+    
+     <string name="btn_Confirmation">"确定"</string>
+     <string name="calendar_date" >"请选择日期"</string>
 </resources>

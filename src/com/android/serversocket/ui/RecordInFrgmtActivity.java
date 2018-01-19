@@ -13,6 +13,7 @@ import com.android.serversocket.util.InitAppData;
 import com.android.serversocket.util.PopupWidows;
 import com.android.serversocket.util.PupWidowsAdapter;
 import com.android.serversocket.util.Utils;
+import com.nineoldandroids.view.ViewHelper;
 
 import android.content.AsyncQueryHandler;
 import android.content.Context;
@@ -29,6 +30,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.DrawerLayout.DrawerListener;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -50,8 +53,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class RecordInFrgmtActivity extends FragmentActivity {
+public class RecordInFrgmtActivity extends FragmentActivity implements OnClickListener {
 	private static final String TAG = "RecordListActivity";
+	
+	private DrawerLayout mDrawerLayout;
 	RecentCallsAdapter mAdapter;
 	private QueryHandler mQueryHandler;
 	private DBOperator mDbOperator;
@@ -90,6 +95,18 @@ public class RecordInFrgmtActivity extends FragmentActivity {
 	String[] remarkarr = null;
 	
 	private Uri RecordinUri = null;
+	static final int COLUMN_INDEX_ID = 0;
+	static final int COLUMN_INDEX_RECORDID = 1;
+	static final int COLUMN_INDEX_NUM = 3;
+	static final int COLUMN_INDEX_DATA1 = 4;
+	static final int COLUMN_INDEX_DATA2 = 5;
+	static final int COLUMN_INDEX_DATA3 = 6;
+	static final int COLUMN_INDEX_SUM = 7;
+	static final int COLUMN_INDEX_PIECE = 8;
+	static final int COLUMN_INDEX_DATE = 9;
+	static final int COLUMN_INDEX_REMARK = 10;
+	static final int COLUMN_INDEX_OWNER = 11;
+	
     /** The projection to use when querying the record in table */
     static final String[] RECORD_IN_PROJECTION = new String[] {
     	"_id",      //0
@@ -102,9 +119,87 @@ public class RecordInFrgmtActivity extends FragmentActivity {
         "data4" ,   //7
         "data5",    //8
         "date",      //9
-        "data6"
+        "data6",     //10
+        "data7"      //11
     };
-    
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.headIcon:
+//			lockout();
+			break;
+		case R.id.head_btn:
+			OpenRightMenu(v);
+			break;
+		default:
+			break;
+		}
+	}
+	public void OpenRightMenu(View view) {
+		mDrawerLayout.openDrawer(Gravity.RIGHT);
+		mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED,
+				Gravity.RIGHT);
+	}
+	private void initEvents() {
+		mDrawerLayout.setDrawerListener(new DrawerListener() {
+			@Override
+			public void onDrawerStateChanged(int newState) {
+			}
+
+			@Override
+			public void onDrawerSlide(View drawerView, float slideOffset) {
+				View mContent = mDrawerLayout.getChildAt(0);
+				View mMenu = drawerView;
+				float scale = 1 - slideOffset;
+				float rightScale = 0.8f + scale * 0.2f;
+				if (drawerView.getTag().equals("LEFT")) {
+
+					/*
+					 * float leftScale = 1 - 0.3f * scale;
+					 * 
+					 * ViewHelper.setScaleX(mMenu, leftScale);
+					 * ViewHelper.setScaleY(mMenu, leftScale);
+					 * ViewHelper.setAlpha(mMenu, 0.6f + 0.4f * (1 - scale));
+					 * ViewHelper.setTranslationX(mContent,
+					 * mMenu.getMeasuredWidth() * (1 - scale));
+					 * ViewHelper.setPivotX(mContent, 0);
+					 * ViewHelper.setPivotY(mContent,
+					 * mContent.getMeasuredHeight() / 2); mContent.invalidate();
+					 * ViewHelper.setScaleX(mContent, rightScale);
+					 * ViewHelper.setScaleY(mContent, rightScale);
+					 */
+					ViewHelper.setTranslationX(mContent,
+							mMenu.getMeasuredWidth() * (1 - scale));
+				} else {
+					ViewHelper.setTranslationX(mContent,
+							-mMenu.getMeasuredWidth() * slideOffset);
+					ViewHelper.setPivotX(mContent, mContent.getMeasuredWidth());
+					ViewHelper.setPivotY(mContent,
+							mContent.getMeasuredHeight() / 2);
+					mContent.invalidate();
+					ViewHelper.setScaleX(mContent, rightScale);
+					ViewHelper.setScaleY(mContent, rightScale);
+				}
+
+			}
+
+			@Override
+			public void onDrawerOpened(View drawerView) {
+			}
+
+			@Override
+			public void onDrawerClosed(View drawerView) {
+				mDrawerLayout.setDrawerLockMode(
+						DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.RIGHT);
+			}
+		});
+	}
+	
+	private void initView() {
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.id_drawerLayout);
+		mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED,
+				Gravity.RIGHT);
+	}
 	// for list
 	OnTouchListener mListTouchListener = new OnTouchListener() {
 		@Override
@@ -160,7 +255,7 @@ public class RecordInFrgmtActivity extends FragmentActivity {
 
 	public void initPupWidowsAdapter() {
 		_TextArray = new String[Const.PUPWIN_CONTENT_ARRAY_MAX];
-		ArrayList<String> PupContName = mDbOperator.getPupLeafNames(Utils.toTypeID(PageIndex));
+		ArrayList<String> PupContName = mDbOperator.getPupWinContentNames(Utils.toTypeID(PageIndex));
 		Iterator<String> ite = PupContName.iterator();
 		int k = 0;
 		while (ite.hasNext()) {
@@ -184,7 +279,7 @@ public class RecordInFrgmtActivity extends FragmentActivity {
 				String tmpData = _TextArray[position];
 				int nextPage = PageIndex + 1;
 				if (tmpData != null) {
-					String dataLeafID = mDbOperator.getPupLeafID(Const.TABLE_PupLeaf, tmpData);
+					String dataLeafID = mDbOperator.getPupLeafID(Const.TABLE_PupWinContent, tmpData);
 					tmpData = dataLeafID;
 					mBodyLine.setData(PageIndex, tmpData);
 					if (nextPage < TypeCount) {
@@ -211,14 +306,16 @@ public class RecordInFrgmtActivity extends FragmentActivity {
 				}
 			}
 
-			mBodyLine.setPhone(Bundle_telnumber);
+			String recordid = Utils.systemFrmtTime("yyMMddHHmmss");
+//			recordid = number + time;
+			Bundle_recordid = recordid;
+//			mBodyLine.setPhone(Bundle_telnumber);
 			mBodyLine.setRecordid(Bundle_recordid);
-			String times = Utils.systemFrmtTime("yyyy/MM/dd HH:mm:ss");
-			mBodyLine.setDate(times);// set timed
-
+//			String times = Utils.systemFrmtTime("yyyy/MM/dd HH:mm:ss");
+//			mBodyLine.setModified(Utils.getSecondTimestamp());// set timed
 			mDbOperator.insertRecordin(mBodyLine);
 			mBodyLine.clear();
-
+            
 			// update Today`flag(data2) to show
 //			mDbOperator.updateRecordTodayUsed(Bundle_recordid);
 
@@ -297,7 +394,7 @@ public class RecordInFrgmtActivity extends FragmentActivity {
 		mMenuWindow.setNum(NumStr);
 	}
 	private void setNextGirdDate( int index) {
-		ArrayList<String> PupContName = mDbOperator.getPupLeafNames(Utils.toTypeID(index));
+		ArrayList<String> PupContName = mDbOperator.getPupWinContentNames(Utils.toTypeID(index));
 		Iterator<String> ite = PupContName.iterator();
 		int k = 0;
 		while(ite.hasNext()) {
@@ -321,7 +418,7 @@ public class RecordInFrgmtActivity extends FragmentActivity {
 		if (Bundle_Gesture)
 			order = "date DESC";
 		mQueryHandler.startQuery(QUERY_TOKEN, null, RecordinUri, RECORD_IN_PROJECTION,
-				Const.RECORDIN_COLUMN_RECORDID + "=? and data7 is not -1", new String[] { Bundle_recordid }, order);
+				"data7 is not -1", null, order);
 	}
 
 	@Override
@@ -353,11 +450,12 @@ public class RecordInFrgmtActivity extends FragmentActivity {
 //    	DateDialog(false);
 //    }
     setActivityTitle();
-    
+    initView();
+    initEvents();
     Bundle_Gesture = intent.getBooleanExtra(Const.BUNDLE_Gesture, false);
     mLayoutHide.setVisibility(View.VISIBLE);
 		headNewRecord.setVisibility(View.VISIBLE);
-//		headNewRecord.setOnClickListener(mNewRecordListener);
+		headNewRecord.setOnClickListener(this);
 }
 
 	private void init() {
@@ -440,7 +538,7 @@ public class RecordInFrgmtActivity extends FragmentActivity {
 //			}
 //			NUM_HEAD.setText(" " + Integer.toString(mDbOperator.queryRecordINNum(Bundle_recordid)) + "̨");
 		} else {
-			ArrayList<String> PupContName = mDbOperator.getPupLeafNames(Utils.toTypeID(PageIndex));
+			ArrayList<String> PupContName = mDbOperator.getPupWinContentNames(Utils.toTypeID(PageIndex));
 			Iterator<String> ite = PupContName.iterator();
 			int k = 0;
 			while (ite.hasNext()) {
@@ -475,16 +573,6 @@ public class RecordInFrgmtActivity extends FragmentActivity {
     TextView groupSize;
 }
 
-static final int COLUMN_INDEX_ID = 0;
-static final int COLUMN_INDEX_PHONENUMBER = 1;
-static final int COLUMN_INDEX_NUM = 3;
-static final int COLUMN_INDEX_DATA1 = 4;
-static final int COLUMN_INDEX_DATA2 = 5;
-static final int COLUMN_INDEX_DATA3 = 6;
-static final int COLUMN_INDEX_SUM = 7;
-static final int COLUMN_INDEX_PIECE = 8;
-static final int COLUMN_INDEX_DATE = 9;
-static final int COLUMN_INDEX_REMARK = 10;
 	final class RecentCallsAdapter extends GroupingListAdapter
 			implements ViewTreeObserver.OnPreDrawListener, View.OnClickListener {
 		private boolean mLoading = true;
@@ -502,7 +590,10 @@ static final int COLUMN_INDEX_REMARK = 10;
 			// view.getTag().toString().split(Const.KEY_DELIMITER);
 			// form recordid _id
 			// AlertDialog dialog = (AlertDialog) CreateDialog(data[0],data[1]);
-			String data = view.getTag().toString();
+			String recordid = view.getTag().toString();
+			Intent intent = new Intent(RecordInFrgmtActivity.this, ClientUserActivity.class);
+			intent.putExtra(Const.BUNDLE_RECORD_ID, recordid);
+			startActivity(intent);
 			// String hintPiece = mDbOperator.queryRecordINhintPiece(data);
 			// AlertDialog dialog = (AlertDialog) PieceDialog(data,hintPiece);
 			// dialog.show();
@@ -593,8 +684,10 @@ static final int COLUMN_INDEX_REMARK = 10;
 			final RecentCallsListItemViews views = (RecentCallsListItemViews) view.getTag();
 			//
 			int rownumber = c.getInt(COLUMN_INDEX_ID); // rownum 0
-			views.callView.setTag(rownumber);
+//			views.callView.setTag(rownumber);
 
+			String recordid = c.getString(COLUMN_INDEX_RECORDID);
+			views.callView.setTag(recordid);
 			// No.
 			int No = c.getCount() - c.getPosition();
 			if (!Bundle_Gesture) {
@@ -603,19 +696,24 @@ static final int COLUMN_INDEX_REMARK = 10;
 			views.rownumView.setText(Integer.toString(No));
 
 			// piece
-			String mPiece = c.getString(COLUMN_INDEX_PIECE); // data5 8
-			mPiece = mPiece.trim();
-			views.callView.setText(mPiece);
+			String owner = c.getString(COLUMN_INDEX_OWNER); // data5 8
+			if(owner!=null) {
+			   owner = owner.trim();
+			   views.callView.setText(owner);
+//			   views.callView.setEnabled(false);
+			}
+			 
 
-			String data2 = mDbOperator.getPupLeafName(Const.TABLE_PupLeaf, c.getString(COLUMN_INDEX_DATA2)); // data1
+			String data2 = mDbOperator.getPupLeafName(Const.TABLE_PupWinContent, c.getString(COLUMN_INDEX_DATA2)); // data1
 																													// 4
-			String data3 = mDbOperator.getPupLeafName(Const.TABLE_PupLeaf, c.getString(COLUMN_INDEX_DATA3));
+			String data3 = mDbOperator.getPupLeafName(Const.TABLE_PupWinContent, c.getString(COLUMN_INDEX_DATA3));
 			views.labelView.setText(data2 + "  " + data3);
 
-			String remark = c.getString(COLUMN_INDEX_REMARK);
-			views.remark.setText(remark);
+			String remark = c.getString(COLUMN_INDEX_RECORDID);
+			String end = "-"+remark.substring(8);
+			views.remark.setText(end);
 
-			String data1 = mDbOperator.getPupLeafName(Const.TABLE_PupLeaf, c.getString(COLUMN_INDEX_DATA1)); // name
+			String data1 = mDbOperator.getPupLeafName(Const.TABLE_PupWinContent, c.getString(COLUMN_INDEX_DATA1)); // name
 																													// 5
 			if (!TextUtils.isEmpty(data1)) {
 				views.line1View.setText(data1);
@@ -720,4 +818,5 @@ static final int COLUMN_INDEX_REMARK = 10;
 			}
 		}
 	}
+
 }

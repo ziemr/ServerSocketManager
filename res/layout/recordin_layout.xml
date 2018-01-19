@@ -1,5 +1,10 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/id_drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+     >
+<LinearLayout 
     android:id="@+id/linerbase"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,3 +23,11 @@
     </RelativeLayout>
 
 </LinearLayout>
+    <fragment
+        android:id="@+id/id_right_menu"
+        android:name="com.android.serversocket.ui.MenuRightFragment"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:tag="RIGHT" />
+</android.support.v4.widget.DrawerLayout>
